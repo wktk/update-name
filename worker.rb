@@ -8,4 +8,4 @@ options = {
 }
 
 update_name = UpdateName.new(options)
-update_name.run(:name, :image)
+update_name.run(:name, :icon)
