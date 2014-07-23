@@ -45,7 +45,7 @@ class UpdateName
   # @param [Twitter::Tweet] tweet
   # @return [void]
   def update_icon(tweet)
-    return unless tweet.media? && tweet.text =~ /(?:icon|アイコン)/i
+    return unless tweet.media? && tweet.text =~ /icon/i
     return unless tweet.text =~ /[@＠]#{user.screen_name}/i
 
     image = temp_download(tweet.media.first.media_url_https.to_s + ':large')
