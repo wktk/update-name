@@ -27,6 +27,7 @@ class UpdateName
       update_name(object) if mode.include?(:name)
       update_icon(object) if mode.include?(:icon)
       update_bio(object)  if mode.include?(:bio)
+      update_location(object) if mode.include?(:location)
     end
   rescue => e
     warn "#{e.class}: #{e.message}"
@@ -67,6 +68,16 @@ class UpdateName
     twitter.update(message[0...140], in_reply_to_status_id: tweet.id)
   end
 
+  # @param [Twitter::Tweet] tweet
+  # @return [void]
+  def update_location(tweet)
+    return unless match_data = tweet.text.match(/^[@＠]#{user.screen_name}\s+loc\s*(.+)/i)
+    new_location = match_data[1]
+    updated_profile = twitter.update_profile(location: new_location)
+    message = "@#{tweet.user.screen_name} 場所を更新しました: " + updated_profile.location.gsub(/[@＠]/, '@ ')
+    warn message
+    twitter.update(message[0...140], in_reply_to_status_id: tweet.id)
+  end
   private
 
   # @param [String] uri
