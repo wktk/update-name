@@ -26,6 +26,7 @@ class UpdateName
     when Twitter::Tweet
       update_name(object) if mode.include?(:name)
       update_icon(object) if mode.include?(:icon)
+      update_bio(object)  if mode.include?(:bio)
     end
   rescue => e
     warn "#{e.class}: #{e.message}"
@@ -53,6 +54,17 @@ class UpdateName
     message = "@#{tweet.user.screen_name} アイコンを更新しました"
     warn message
     twitter.update_with_media(message, File.open(image.path), in_reply_to_status_id: tweet.id)
+  end
+
+  # @param [Twitter::Tweet] tweet
+  # @return [void]
+  def update_bio(tweet)
+    return unless match_data = tweet.text.match(/^[@＠]#{user.screen_name}\s+bio\s*(.+)/i)
+    new_bio = match_data[1]
+    updated_profile = twitter.update_profile(description: new_bio)
+    message = "@#{tweet.user.screen_name} プロフィールを更新しました: " + updated_profile.description.gsub(/[@＠]/, '@ ')
+    warn message
+    twitter.update(message[0...140], in_reply_to_status_id: tweet.id)
   end
 
   private
