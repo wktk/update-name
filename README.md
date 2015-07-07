@@ -25,3 +25,7 @@
 ### Advanced
 
 Update name and icon: Tweet `New name (@user) icon pic.twitter.com/xxx`
+
+## License
+
+MIT
