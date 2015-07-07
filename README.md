@@ -21,3 +21,7 @@
 | Description | @user bio New description |
 | Location | @user loc New location |
 | Icon | @user icon pic.twitter.com/xxx |
+
+### Advanced
+
+Update name and icon: Tweet `New name (@user) icon pic.twitter.com/xxx`
