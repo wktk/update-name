@@ -4,14 +4,12 @@
 
     git clone https://git.github.com/wktk/update-name.git
     cd update-name
-    heroku create
-    git push heroku master
-    heroku config:add \
-      TWITTER_CONSUMER_KEY=XXX \
+    bundle install --path .bundle --binstubs .bundle/bin
+    TWITTER_CONSUMER_KEY=XXX \
       TWITTER_CONSUMER_SECRET=XXX \
       TWITTER_ACCESS_TOKEN=XXX \
-      TWITTER_ACCESS_TOKEN_SECRET=XXX
-    heroku ps:scale worker=1
+      TWITTER_ACCESS_TOKEN_SECRET=XXX \
+      bundle exec ruby worker-daemon.rb
 
 ## Updating profile
 
